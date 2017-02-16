@@ -52,27 +52,85 @@ What's the time complexity?
 
 function Stack(capacity) {
   // implement me...
+  // should have a pointer to the last element added
+  // should have a data storage
+  // should have a max value that represents the capacity
+  this._storage = {};
+  this._counter = 0;
+  this._max = capacity || Infinity;
+
 }
 
 Stack.prototype.push = function(value) {
   // implement me...
+  // if there's insufficient capacity
+  if(this._counter === this._max) {
+    //throw an error
+    throw new Error("stack sized exceeded");
+  } else {
+    //push into the storage the passed in argument value
+    this._storage[this._counter] = value;
+    //increment the counter
+    //YES i can write "this._storage[this._counter++]" above HOWEVER that leads to less human readable code
+    this._counter++;
+  }
 };
 // Time complexity:
+// O(1)
 
 Stack.prototype.pop = function() {
   // implement me...
+  // if there's nothing to pop off
+  if(this._counter === 0) {
+    //throw an error
+    throw new Error("there's nothing in the stack");
+  } else {
+    //get the last value and store it in a temp variable
+    var temp = this._storage[this._counter - 1];
+    //delete the last value
+    delete this._storage[this._counter - 1];
+    //reduce the counter
+    this._counter--;
+    //return the last value
+    return temp;
+  }
 };
 // Time complexity:
+// O(1)
 
 Stack.prototype.peek = function() {
   // implement me...
+  // so this is similar to pop but doesn't remove it
+  // if there's nothing in the storage
+  if(this._counter === 0) {
+    // throw an error
+    throw new Error("there's nothing in the stack")
+  } else {
+    // return the last value
+    return this._storage[this._counter - 1];
+  }
 };
 // Time complexity:
+// O(1)
 
 Stack.prototype.count = function() {
   // implement me...
+  return this._counter? (this._counter - 1): 0;
 };
 // Time complexity:
+// O(1)
+
+
+//TESTS:
+var s = new Stack(10);
+s.count();
+s.push('something');
+s.push('something1');
+s.count();
+s.pop();
+s.count();
+console.log(s)
+
 
 
 /*
