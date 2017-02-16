@@ -52,27 +52,82 @@ What's the time complexity?
 
 function Queue(capacity) {
   // implement me...
+  // needs a capacity variable
+  // needs a ds to store the enquequed values (object)
+  // needs a pointer to select the first value in line
+  // needs a pointer to select the last value in line
+  this._max = capacity || Infinity;
+  this._storage = {};
+  this._first = 0;
+  this._last = 0;
+  this._length = 0;
 }
 
 Queue.prototype.enqueue = function(value) {
   // implement me...
+  // if we're at capacity
+  if(this._length === this_max) {
+    // throw error
+    throw new Error("We're at max capacity. Dequeue an item before enqueueing.");
+  } else {
+    // set the value as the last value in the storage && increment last pointer
+    this._storage[this._last++] = value;
+    // increment the length then return it
+    return ++this._length;
+  }
 };
 // Time complexity:
+// O(1)
 
 Queue.prototype.dequeue = function() {
   // implement me...
+  // if there's nothing to dequeue
+  if(this._length === 0) {
+    // throw an error
+    throw new Error("The queue is empty. There's nothing to dequeue.");
+  } else {
+    // decrement length
+    this._length--;
+    // return value of the first item and increment the first pointer
+    return this._storage[this._first++];
+  }
 };
 // Time complexity:
+// O(1)
 
 Queue.prototype.peek = function() {
   // implement me...
+  // if there's nothing to dequeue
+  if(this._length === 0) {
+    // throw an error
+    throw new Error("The queue is empty. There's nothing to see here.");
+  } else {
+    // return value of the first item and increment the first pointer
+    return this._storage[this._first];
+  }
 };
 
 Queue.prototype.count = function() {
   // implement me...
+  return this._length;
 };
 // Time complexity:
+// O(1)
 
+
+//TESTS:
+var q = new Queue(10);
+q.count();
+q.enqueue("one");
+q.enqueue("two");
+q.count();
+q.peek();
+q.dequeue();
+q.count();
+q.enqueue("three");
+q.count();
+q.dequeue();
+q.peek();
 
 
 /*
