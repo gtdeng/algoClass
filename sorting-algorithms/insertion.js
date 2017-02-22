@@ -29,3 +29,28 @@ now repeat for next unsorted element
 (https://en.wikipedia.org/wiki/Shellsort)
 
 */
+
+
+let insertionSort = (arr) => {
+  let temp;
+
+  // Iterate over array and grow a sorted array behind current element.
+  //ii. loop thru the array from left to right
+  for (var i = 1; i < arr.length; i++) {
+    // For each position, compare value of element with previous elements and swap positions if previous element is larger.
+    //jj. loop thru the prev elements from curr to leftmost
+    //if the curr < the one on it's right
+    for (var j = i; arr[j] < arr[j - 1]; j--) {
+      //swap
+      temp = arr[j];
+      arr[j] = arr[j-1];
+      arr[j-1] = temp;
+    }
+  }
+
+  return arr;
+};
+
+
+
+insertionSort([5, 4, 3, 6, 2, 1]);

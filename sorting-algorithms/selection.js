@@ -28,3 +28,26 @@ Stable Variant
 - Implement selection sort for a linked list (you can use your data structure implemention from earlier in the course). How does this impact performance and stability?
 
 */
+
+
+let selectionSort = (arr) => {
+  let temp;
+  //Iterate over array and grow a sorted array behind current element.
+  for (var i = 0; i < arr.length; i++) {
+    //loop thru the arr again to find the smallest el to it's right
+    //For each position, find the smallest element in unsorted subarray starting at that position, and swap elements so that smallest element is at the beginning of unsorted subarray.
+    for (var j = i; j < arr.length; j++) {
+      //if the current element is the smallest
+      if(arr[j] < arr[i]) {
+        //swap
+        temp = arr[j];
+        arr[j] = arr[i];
+        arr[i] = temp;
+      }
+    }
+  }
+
+  return arr;
+};
+
+selectionSort([5, 4, 3, 6, 2, 1]);
