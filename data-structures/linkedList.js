@@ -85,25 +85,67 @@ function Node(value) {
   this.value = value;
 }
 
+
+
 function LinkedList(headValue) {
-  if (headValue === undefined) console.log('Must provide value for first node');
+  if (headValue === undefined) {
+    throw new Error('Must provide value for first node');
+  }
+
   this.head = new Node(headValue);
 }
 
+
+
 LinkedList.prototype.forEach = function(callback) {
   // implement me...
+  let current = this.head;
+
+  while (current) {
+    callback(current.value);
+    current = current.next;
+  }
 };
-// Time complexity:
+// Time complexity: O(n)
+
+
 
 LinkedList.prototype.print = function() {
   // implement me...
+  this.forEach(console.log());
 };
-// Time complexity:
+// Time complexity: O(n)
+
+
 
 LinkedList.prototype.insertAfter = function(node, value) {
   // implement me...
+  //set current node as the head
+  let current = this.head;
+
+  while (current) {
+    //check if it's the value
+    if (current.value === value) {
+      //store the current next node value as temp
+      let temp = current.next;
+      //set the new node as the next node
+      current.next = node;
+      //set new node's next as the temp
+      node.next = temp;
+      //exit
+      return "success";
+    } else {
+      //else reset the current node as the current's next
+      current = current.next;
+    }
+  }
+
+  //exit
+  throw new Error("cannot find " + node)
 };
-// Time complexity:
+// Time complexity: O(n)
+
+
 
 LinkedList.prototype.removeAfter = function(node) {
   // implement me...
@@ -121,8 +163,21 @@ LinkedList.prototype.removeHead = function() {
 
 LinkedList.prototype.findNode = function(value) {
   // implement me...
+  let current = this.head;
+
+  while (current) {
+    if(current.value === value) {
+      return current;
+    } else {
+      current = current.next;
+    }
+  }
+
+  return false;
 };
-// Time complexity:
+// Time complexity: O(n);
+
+
 
 LinkedList.prototype.appendToTail = function(value) {
   // implement me...
