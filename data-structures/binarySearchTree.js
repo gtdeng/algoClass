@@ -52,43 +52,143 @@ A binary search tree was created by iterating over an array and inserting each e
 */
 
 function BinarySearchTree (value) {
-  this.value = value;
-  this.left = null;
-  this.right = null;
+  this._value = value;
+  this._left = null;
+  this._right = null;
 }
+
+
 
 BinarySearchTree.prototype.insert = function(value) {
   // implement me...
+  //if the value already exists
+  if (this._value === value) {
+    //return "value exists"
+    return "value exists";
+  }
+
+  //create a new bst
+  let bst = new BinarySearchTree(value);
+
+  //if value-arg < value
+  if (value < this._value) {
+    //if the left pointer is null
+    if (!this._left) {
+      //store bst on the left side
+      this._left = bst;
+    } else {
+      //else call insert on the left side
+      this._left.insert(value);
+    }
+  }
+
+  //if value-arg > value
+  if (value > this._value) {
+    //if the right pointer is null
+    if (!this._right) {
+      //store bst on the right side
+      this._right = bst;
+    } else {
+      //else call insert on the right side
+      this._right.insert(value);
+    }
+  }
 };
-// Time complexity:
+// Time complexity: O(logn)
+
+
 
 BinarySearchTree.prototype.contains = function(value) {
   // implement me...
+  if (this._value === value) {
+    return true;
+  }
+
+  //else if value-arg > current value and the right is not null
+  if (value > this._value && this._right) {
+    //go right and check that tree
+    return this._right.contains(value);
+  }
+
+  //if value-arg < current value and the left is not null
+  if (value < this._value && this._left) {
+    //go left and check that tree
+     return this._left.contains(value);
+  }
+
+  return false;
 };
-// Time complexity:
+// Time complexity: O(log n)
 
 BinarySearchTree.prototype.traverseDepthFirst_inOrder = function(fn) {
   // implement me...
+  //SO this would mean go all the way down the tree and start from the smallest value (left down most) and go up and right to the largest (right down most)
+
+  // //if left side has something
+  // if (this._left) {
+  //   //dig into it and call traverseDepthFirst_inOrder(fn) on it. 
+  //   this._left.traverseDepthFirst_inOrder(fn);
+  // }
+  this._left && this._left.traverseDepthFirst_inOrder(fn);
+
+  //regardless of whether left side has something or not, we will still need to
+  //call fn on the current value (this._value)
+  fn(this._value);
+
+  // //then check if right side has something
+  // if (this._right) {
+  //   //dig into it and call traverseDepthFirst_inOrder(fn) on it.
+  //   this._right.traverseDepthFirst_inOrder(fn);
+  // }
+  this._right && this._right.traverseDepthFirst_inOrder(fn);
 };
 // Time complexity:
 
-BinarySearchTree.prototype.traverseDepthFirst_preOrder = function(fn) {
+
+
+BinarySearchTree.prototype.isBalanced = function() {
   // implement me...
-};
-// Time complexity:
+  const levels = [];
 
-BinarySearchTree.prototype.traverseDepthFirst_postOrder = function(fn) {
-  // implement me...
+  const traverse = (node, level) => {
+    //i want to keep traversing until i hit the end
+    //at the end i want to exit and then push the number to the levelsArray
+    //if there's any left or right trees, call traverse of that node
+
+    if (!node._left && !node._right) {
+      levels.push(level);
+      return;
+    }
+
+    node._left && traverse(node._left, ++level);
+    node._right && traverse(node._right, ++level);
+  };
+
+  traverse(this, 0);
+
+  const min = Math.min(...levels);
+  const max = Math.max(...levels);
+
+  return max-min <= 1;
 };
-// Time complexity:
+// Time complexity: O(n)
 
 
-BinarySearchTree.prototype.checkIfFull = function() {
-  // implement me...
-};
-// Time complexity:
 
-BinarySearchTree.prototype.checkIfBalanced = function() {
-  // implement me...
-};
-// Time complexity:
+
+//TEST CASES:
+var bst = new BinarySearchTree(4);
+
+bst.insert(5);
+bst.insert(1);
+bst.insert(6);
+bst.insert(7);
+bst.contains(7);
+bst.isBalanced()
+
+
+function cl(x) {
+  console.log(x);
+}
+
+bst.traverseDepthFirst_inOrder(cl)
